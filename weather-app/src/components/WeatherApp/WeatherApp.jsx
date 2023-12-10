@@ -47,6 +47,8 @@ const WeatherApp = () => {
           temp[0].innerHTML = data.main.temp + 'C';
           location[0].innerHTML = data.name;
 
+          //hello
+
 
           if(data.weather[0].icon === '01d' || data.weather[0].icon === '01n'){
             setWicon(clear_icon);
