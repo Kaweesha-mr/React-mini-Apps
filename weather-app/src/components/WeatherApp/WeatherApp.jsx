@@ -13,32 +13,47 @@ import humidity_icon from '../Assets/humidity.png';
 
 const WeatherApp = () => {
 
-  let api_key = "905ba3a76a9308676a98176dc29ea872";
+  let api_key = "e0b75e0e42b73936bf02514b2ae174fe";
 
   const search = async () => {
     const element = document.getElementsByClassName('cityInput');
-
+  
     if (element[0].value === '') {
       return 0;
     }
-
-    let url = `https://api.openweathermap.org/data/2.5/weather?q=${element[0].value}&appid=${api_key}&units=metric`
-
-    let response = await fetch(url);
-
-    //this will convert the response into json format
-    let data = await response.json();
-
-    const humidity = document.getElementsByClassName('humudity-percent');
-    const wind = document.getElementsByClassName('humudity-percent');
-    const temp = document.getElementsByClassName('weather-temp');
-    const location = document.getElementsByClassName('weather-location');
-    
-    humidity[0].innerHTML = data.main.humidity + '%';
-    wind[0].innerHTML = data.wind.speed + 'kmph';
-    temp[0].innerHTML = data.main.temp + 'C';
-    location[0].innerHTML = data.name;
+  
+    let url = `https://api.openweathermap.org/data/2.5/weather?q=${element[0].value}&appid=${api_key}&units=metric`;
+  
+    try {
+      let response = await fetch(url);
+  
+      // Check if the response is successful (status code 200)
+      if (response.ok) {
+        // Read the JSON response only once
+        let data = await response.json();
+  
+        // Check if the necessary properties exist before accessing them
+        if (data.main && data.main.humidity !== undefined && data.wind) {
+          const humidity = document.getElementsByClassName('humudity-percent');
+          const wind = document.getElementsByClassName('wind');
+          const temp = document.getElementsByClassName('weather-temp');
+          const location = document.getElementsByClassName('weather-location');
+  
+          humidity[0].innerHTML = data.main.humidity + '%';
+          wind[0].innerHTML = data.wind.speed + 'kmph';
+          temp[0].innerHTML = data.main.temp + 'C';
+          location[0].innerHTML = data.name;
+        } else {
+          console.error('Unexpected data structure in API response:', data);
+        }
+      } else {
+        console.error('Failed to fetch weather data. Status code:', response.status);
+      }
+    } catch (error) {
+      console.error('Error fetching weather data:', error);
+    }
   }
+
   return (
     <div className='container'>
       <div className="topbar">
@@ -56,6 +71,7 @@ const WeatherApp = () => {
       <div className="weather-temp"></div>
       <div className="weather-location">London</div>
       <div className="data-container">
+
         <div className="element">
           <img src={humidity_icon} alt="" className='icon' />
           <div className="data">
@@ -63,13 +79,15 @@ const WeatherApp = () => {
             <div className="text">Humidity</div>
           </div>
         </div>
+
         <div className="element">
           <img src={wind_icon} alt="" className='icon' />
           <div className="data">
-            <div className="humudity-percent">18kmph</div>
+            <div className="wind">18kmph</div>
             <div className="text">Wind Speed</div>
           </div>
         </div>
+
       </div>
 
     </div>
