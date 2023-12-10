@@ -1,8 +1,8 @@
-import React from 'react'
+import React, { useState } from 'react'
 import './WeatherApp.css'
 
 import search_icon from '../Assets/search.png';
-import location_icon from '../Assets/clear.png';
+import clear_icon from '../Assets/clear.png';
 import cloud_icon from '../Assets/cloud.png';
 import drizzle_icon from '../Assets/drizzle.png';
 import rain_icon from '../Assets/rain.png';
@@ -14,6 +14,9 @@ import humidity_icon from '../Assets/humidity.png';
 const WeatherApp = () => {
 
   let api_key = "e0b75e0e42b73936bf02514b2ae174fe";
+
+
+  const [wicon,setWicon] = useState(cloud_icon);
 
   const search = async () => {
     const element = document.getElementsByClassName('cityInput');
@@ -43,6 +46,51 @@ const WeatherApp = () => {
           wind[0].innerHTML = data.wind.speed + 'kmph';
           temp[0].innerHTML = data.main.temp + 'C';
           location[0].innerHTML = data.name;
+
+
+          if(data.weather[0].icon === '01d' || data.weather[0].icon === '01n'){
+            setWicon(clear_icon);
+          }
+
+          else if(data.weather[0].icon === '02d' || data.weather[0].icon === '02n'){
+            setWicon(cloud_icon);
+          }
+
+          else if(data.weather[0].icon === '03d' || data.weather[0].icon === '03n'){
+            setWicon(drizzle_icon);
+          }
+            
+            else if(data.weather[0].icon === '04d' || data.weather[0].icon === '04n'){
+              setWicon(rain_icon);
+            }
+  
+            else if(data.weather[0].icon === '09d' || data.weather[0].icon === '09n'){
+              setWicon(snow_icon);
+            }
+  
+            else if(data.weather[0].icon === '10d' || data.weather[0].icon === '10n'){
+              setWicon(rain_icon);
+            }
+  
+            else if(data.weather[0].icon === '11d' || data.weather[0].icon === '11n'){
+              setWicon(rain_icon);
+            }
+  
+            else if(data.weather[0].icon === '13d' || data.weather[0].icon === '13n'){
+              setWicon(snow_icon);
+            }
+  
+            else if(data.weather[0].icon === '50d' || data.weather[0].icon === '50n'){
+              setWicon(cloud_icon);
+            }
+  
+            else{
+              setWicon(cloud_icon);
+            }
+
+
+
+
         } else {
           console.error('Unexpected data structure in API response:', data);
         }
@@ -65,7 +113,7 @@ const WeatherApp = () => {
         </div>
       </div>
       <div className="weather-image">
-        <img src={cloud_icon} alt="" />
+        <img src={wicon} alt="" />
       </div>
 
       <div className="weather-temp"></div>
