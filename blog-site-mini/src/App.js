@@ -6,8 +6,6 @@ import Home from "./components/Home";
 function App() {
   return (
 
-
-    <Router>
       <div className="App">
 
         <h1 style={
@@ -16,17 +14,17 @@ function App() {
             padding: "10px",
             backgroundColor: "black",
             color: "white",
-            
           }} > Blog Website</h1>
 
         <Navbar />
         <Routes>
+          
         <Route path="/" element={<Home />} />
 
         </Routes>
 
       </div>
-    </Router>
+    
   );
 }
 
