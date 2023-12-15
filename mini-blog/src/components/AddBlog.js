@@ -1,17 +1,20 @@
 import React, { useState } from "react";
 
 
-const AddBlog = () => {
+
+const AddBlog = ({handleAddBlog}) => {
     
     const [title,setTitle] = useState('');
     const [content,setContent] = useState('');
 
-    //when the submit button clicks there should be a function to handle it
-
-    const handleAddBlog = (e) => {
+    
+    const handleBlog = (e) => {
         e.preventDefault();
+        const blog = {title,content};
 
-
+        handleAddBlog(blog);
+        setTitle('');
+        setContent('');
     }
 
 
@@ -29,7 +32,7 @@ const AddBlog = () => {
                     value={content}
                     onChange={e=> setContent(e.target.value)} />
                 
-                <button onClick={handleAddBlog}>Add Blog</button>
+                <button onClick={handleBlog}>Add Blog</button>
             </form>
         </div>
      );

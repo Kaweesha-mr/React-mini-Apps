@@ -14,13 +14,17 @@ function App() {
     {id:2, title: 'Blog 2', content: 'content for Blog 2'},
 ])
 
+  const handleAddBlog = (blog) => {
+    setBlogs([...blogs,blog]);
+  }
+
   return (
     <div className="App">
       <Router>
         
         <Routes>
           <Route exact path="/" element={<Home blogs={blogs} />}/>
-          <Route path="/add" element={<AddBlog/>}/>
+          <Route path="/add" element={<AddBlog  handleAddBlog={handleAddBlog}/>}/>
           <Route path="/blog/:id" element={<BlogDetail blogs={blogs}/>}/>
         </Routes>
 
