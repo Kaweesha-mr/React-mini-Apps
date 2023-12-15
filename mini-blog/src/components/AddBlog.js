@@ -8,7 +8,9 @@ const AddBlog = () => {
 
     //when the submit button clicks there should be a function to handle it
 
-    const handleAddBlog = () => {
+    const handleAddBlog = (e) => {
+        e.preventDefault();
+
 
     }
 
