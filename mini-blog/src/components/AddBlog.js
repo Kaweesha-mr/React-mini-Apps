@@ -21,7 +21,7 @@ const AddBlog = () => {
                 <input
                     type="text"
                     value={title}
-                    onChange={e=> setContent(e.target.value)} />
+                    onChange={e=> setTitle(e.target.value)} />
                 <label>Content:</label>
                 <textarea
                     value={content}
